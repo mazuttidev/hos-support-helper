@@ -38,7 +38,7 @@ Certifique-se de que as seguintes ferramentas estejam instaladas no seu sistema:
 
 1. Clone este repositório:
    ```bash
-   git clone https://github.com/seu-usuario/hos-support-helper.git
+   git clone https://github.com/mazuttidev/hos-support-helper.git
    cd hos-support-helper
    npm install
    npm run dev

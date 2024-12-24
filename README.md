@@ -41,11 +41,12 @@ Certifique-se de que as seguintes ferramentas estejam instaladas no seu sistema:
    git clone https://github.com/seu-usuario/hos-support-helper.git
    cd hos-support-helper
    npm install
+   npm run dev
 
-Adicione sua API Key e Token do Trello no arquivo .env. 
+Adicione sua API_KEY e API_TOKEN do Trello no arquivo .env. 
 
 
-├── public/                     # Arquivos estáticos (favicon, index.html)
+├── public/           # Arquivos estáticos (favicon, index.html)
 ├── src/
 │   ├── api/                    # Serviços para integração com o Trello
 │   │   └── trelloService.ts    # Comunicação com a API do Trello
@@ -68,6 +69,7 @@ Adicione sua API Key e Token do Trello no arquivo .env.
 ├── .env                        # Variáveis de ambiente (chaves da API)
 ├── package.json                # Dependências do projeto
 └── tsconfig.json               # Configurações do TypeScript
+
 
 ## FUNCIONALIDADES
 Filtros: Permite refinar os dados exibidos.

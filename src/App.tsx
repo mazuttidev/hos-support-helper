@@ -5,7 +5,6 @@ import { Toaster } from "./components/ui/toaster";
 import ProtectedRoute from "./components/ProtectedRoute";
 import LoginPage from "./pages/login";
 import Dashboard from "./pages/dashboard";
-import './index.css'
 import Header from "./components/Header";
 
 export function App() {

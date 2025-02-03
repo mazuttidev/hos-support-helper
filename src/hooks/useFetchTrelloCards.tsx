@@ -1,33 +1,31 @@
-import { fetchCards } from '@/api/trelloService';
-import { TrelloCard } from '@/types/trelloTypes';
-import { useState, useEffect } from 'react';
+import { fetchCards } from "@/api/apiService";
+import { TrelloCard } from "@/types";
+import { useState, useEffect, useCallback } from "react";
 
+const useFetchTrelloCards = () => {
+  const [trelloCardData, setTrelloCardData] = useState<TrelloCard[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<Error | null>(null);
 
-const useFetchTrelloCards = (boardId: string) => {
-  const [trelloCardData, setTrelloCardData] = useState<TrelloCard[]>([]); // Tipando o estado
-  const [loading, setLoading] = useState<boolean>(true); // Tipando o estado de loading
-  const [error, setError] = useState<Error | null>(null); // Tipando o estado de erro
+  // Função para buscar os dados (reutilizável no refetch)
+  const refetchCards = useCallback(async () => {
+    setLoading(true);
+    try {
+      const data = await fetchCards();
+      setTrelloCardData(data);
+    } catch (err) {
+      setError(err as Error);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
+  // Busca inicial quando o componente monta ou `boardId` muda
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchCards(boardId); // Chama a função de serviço
-        setTrelloCardData(data); // Atualiza o estado com os dados
-        setLoading(false); // Define o estado de carregamento como false
-      } catch (err) {
-        setError(err as Error); // Atualiza o estado de erro
-        setLoading(false); // Define o estado de carregamento como false
-      }
-    };
+    refetchCards();
+  }, [refetchCards]);
 
-    fetchData();
-
-    return () => {
-      // Limpeza ou cancelamento de requisição se necessário
-    };
-  }, [boardId]);
-
-  return { trelloCardData, loading, error }; // Retorna os dados, carregamento e erro
+  return { trelloCardData, loading, error, refetchCards };
 };
 
 export default useFetchTrelloCards;

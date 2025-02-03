@@ -1,34 +1,56 @@
-import { fetchCommentsCards } from '@/api/trelloService';
-import { TrelloCommentsCard } from '@/types/trelloTypes';
-import { useState, useEffect } from 'react';
+import { fetchCommentsCards } from '@/api/apiService';
+import { useState, useEffect, useCallback } from 'react';
 
+const useTrelloCommentsCards = (cardId: string) => {
+  const [trelloCommentsData, setTrelloCardData] = useState<any[]>([]); 
+  const [loadingComments, setLoadingComments] = useState<boolean>(true);
+  const [errorComments, setErrorComments] = useState<Error | null>(null);
 
-const useTrelloCommentsCards = (cardId: string, ) => {
-  const [trelloCommentsData, setTrelloCardData] = useState<TrelloCommentsCard[]>([]); // Tipando o estado
-  const [loadingComments, setLoadingComments] = useState<boolean>(true); // Tipando o estado de loading
-  const [errorComments, setErrorComments] = useState<Error | null>(null); // Tipando o estado de erro
+  const fetchData = useCallback(async () => {
+    try {
+      const data = await fetchCommentsCards(cardId);
+      console.log("Dados recebidos:", data);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchCommentsCards(cardId); // Chama a função de serviço
-        setTrelloCardData(data); // Atualiza o estado com os dados
-        setLoadingComments(false); // Define o estado de carregamento como false
-      } catch (err) {
-        setErrorComments(err as Error); // Atualiza o estado de erro
-        setLoadingComments(false); // Define o estado de carregamento como false
+      // Verificando se os dados retornados têm a estrutura esperada
+      if (Array.isArray(data)) {
+        const formattedData = data.map((comment: any) => ({
+          userId: comment.userId,
+          name: comment.name,
+          desc: comment.desc,
+          date: comment.date,
+          isCreatedByChat: comment?.isCreatedByChat || 0,
+        }));
+
+        setTrelloCardData(formattedData);
+      } else {
+        throw new Error('Dados inválidos recebidos');
       }
-    };
 
-    fetchData();
-
-    return () => {
-      // Limpeza ou cancelamento de requisição se necessário
-    };
+      setLoadingComments(false);
+    } catch (err) {
+      setErrorComments(err as Error);
+      setLoadingComments(false);
+    }
   }, [cardId]);
 
-  return { trelloCommentsData, loadingComments, errorComments }; // Retorna os dados, carregamento e erro
+  // Carregar os dados sempre que o cardId mudar
+  useEffect(() => {
+    fetchData();
+
+    const interval = setInterval(() => {
+      fetchData();
+    }, 60000); // Atualiza a cada 1 minuto
+
+    return () => clearInterval(interval);
+  }, [fetchData, cardId]);
+
+  // Função para forçar a atualização dos comentários manualmente
+  const refetchComments = () => {
+    setLoadingComments(true);
+    fetchData();
+  };
+
+  return { trelloCommentsData, loadingComments, errorComments, refetchComments };
 };
 
 export default useTrelloCommentsCards;
- 

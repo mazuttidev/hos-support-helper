@@ -1,13 +1,34 @@
-import { DataTable } from "./pages/dashboard";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import { Navigate } from "react-router-dom";
+import { Toaster } from "./components/ui/toaster";
+import ProtectedRoute from "./components/ProtectedRoute";
+import LoginPage from "./pages/login";
+import Dashboard from "./pages/dashboard";
 import './index.css'
+import Header from "./components/Header";
 
-function App() {
-
+export function App() {
   return (
-    <div className="p-6">
-      <DataTable />
-    </div>
-  )
-}
+    <AuthProvider>
+      <Toaster />
+      <Router>
+        <Routes>
+          {/* Rota pública */}
+          <Route path="/login" element={<LoginPage />} />
+
+          {/* Rota protegida */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<><Header/><div className="p-6"><Dashboard /></div></>} />
+          </Route>
+
+          {/* Rota padrão */}
+          <Route path="*" element={<Navigate to="/login" />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
+  );
+};
 
 export default App;

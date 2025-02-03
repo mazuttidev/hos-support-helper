@@ -2,7 +2,7 @@
 
 ## Descrição
 
-O **HOS SUPPORT HELPER** foi desenvolvido para facilitar a comunicação entre o setor de suporte e o setor de análise. O objetivo é ajudar na solução de problemas relacionados a banco de dados, integrações, produtos e outras demandas. Além disso, permite que o suporte acompanhe as atualizações de forma mais organizada e eficiente.
+O **HOS SUPPORT HELPER** foi desenvolvido para facilitar a comunicação entre os demais setores e o setor de análise. O objetivo é ajudar na solução de problemas relacionados a banco de dados, integrações, produtos e outras demandas. Além disso, permite que o colaborador acompanhe as atualizações de forma mais organizada e eficiente. O HOS Support Helper é uma aplicação desenvolvida com React e TypeScript, utilizando o Vite como ferramenta de build e desenvolvimento. O projeto tem como objetivo fornecer uma interface eficiente e moderna para auxiliar no suporte ao HOS.
 
 ---
 
@@ -16,6 +16,7 @@ O **HOS SUPPORT HELPER** foi desenvolvido para facilitar a comunicação entre o
   - [ESLint](https://eslint.org/)
   - [Prettier](https://prettier.io/)
   - [ReactMarkdown](#)
+  - [RadixUi](https://www.radix-ui.com/)
 
 ---
 
@@ -24,8 +25,6 @@ O **HOS SUPPORT HELPER** foi desenvolvido para facilitar a comunicação entre o
 Este projeto foi criado para melhorar a organização dos processos internos, otimizando a comunicação e proporcionando um ambiente mais colaborativo entre os setores.
 
 ---
-
-## Configuração e Instalação
 
 ### Pré-requisitos
 
@@ -49,19 +48,20 @@ Adicione sua API_KEY e API_TOKEN do Trello no arquivo .env.
 ├── public/           # Arquivos estáticos (favicon, index.html)
 ├── src/
 │   ├── api/                    # Serviços para integração com o Trello
-│   │   └── trelloService.ts    # Comunicação com a API do Trello
+│   │   └── trelloService.ts    # Comunicação com a API Backend
+│   │   
+│   ├── assets/                 # Arquivos estáticos do projeto [logo / imagens]
 │   │
 │   ├── components/             # Componentes reutilizáveis
-│   │   ├── Filters/            # Componentes de filtro
-│   │   ├── Totals/             # Totalizadores
-│   │   ├── Table/              # Tabela de listagem de dados
-│   │   ├── Form/               # Formulário para entrada de dados
-│   │   └── Shared/             # Componentes compartilhados (Botões, Inputs)
+│   │   ├── ui/                 # Componentes da lib ShadCn
+│   │   ├── *.tsx               # Componentes da aplicação customizados 
 │   │
 │   ├── hooks/                  # Hooks personalizados
+│   ├── context/                # Contexto global da aplicação [ Auth ]
 │   ├── pages/                  # Páginas do projeto
 │   ├── styles/                 # Estilos globais e variáveis
 │   ├── utils/                  # Funções utilitárias
+│   ├── types/                  # Tipagens
 │   ├── App.tsx                 # Componente raiz
 │   ├── main.tsx                # Ponto de entrada da aplicação
 │   └── types/                  # Definições de tipos do projeto
@@ -73,9 +73,10 @@ Adicione sua API_KEY e API_TOKEN do Trello no arquivo .env.
 
 ## FUNCIONALIDADES
 Filtros: Permite refinar os dados exibidos.
-Totalizadores: Exibe resumos e contagens importantes.
 Tabela: Lista dados de forma organizada.
 Formulário: Facilita a entrada de novas informações.
+Chat: Permite a comunicação entre duas ou mais pessoas. O chat é relativo a uma SOLICITAÇÃO e não a um usuário. É  possível vincular uma imagem na conversa
+Visualizar Solicitação: É possível visualizar a solicitação realizada.
 
 ### LINKS ÚTEIS
 

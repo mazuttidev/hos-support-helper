@@ -44,7 +44,7 @@ Certifique-se de que as seguintes ferramentas estejam instaladas no seu sistema:
 
 Adicione sua API_KEY e API_TOKEN do Trello no arquivo .env. 
 
-
+```plaintext
 ├── public/           # Arquivos estáticos (favicon, index.html)
 ├── src/
 │   ├── api/                    # Serviços para integração com o Trello
@@ -69,7 +69,7 @@ Adicione sua API_KEY e API_TOKEN do Trello no arquivo .env.
 ├── .env                        # Variáveis de ambiente (chaves da API)
 ├── package.json                # Dependências do projeto
 └── tsconfig.json               # Configurações do TypeScript
-
+```
 
 ## FUNCIONALIDADES
 Filtros: Permite refinar os dados exibidos.
